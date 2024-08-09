@@ -1,0 +1,101 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MovieDB{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Add Bootstrap CSS if you are using it -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Additional styles for banner and logo */
+        .banner {
+            width: 100%;
+            height: 200px; /* Adjust as needed */
+            background: url("{% static 'banner.png' %}") no-repeat center center;
+            background-size: cover;
+        }
+        .logo {
+            max-height: 80px; /* Adjust as needed */
+            margin-right: 15px;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Banner Section -->
+        <div class="banner"></div>
+        <div class="container mt-3">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <!-- Logo and Title -->
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'logo.png' %}" alt="Logo" class="logo">
+                    <span>MovieDB</span>
+                </a>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'add_movie' %}">Add Movie</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'admin' %}">Admin</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'register' %}">Register</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Genres
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% for genre in genres %}
+                                    <a class="dropdown-item" href="{% url 'movies_by_genre' genre.id %}">{{ genre.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="container mt-4">
+        <form method="get" action="{% url 'search' %}">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Search movies..." value="{{ request.GET.query }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        {% block content %}
+        {% endblock %}
+    </div>
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2023 MovieDB. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Add Bootstrap JS and dependencies if you are using it -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

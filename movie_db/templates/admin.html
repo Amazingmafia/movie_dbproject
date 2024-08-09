@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="admin">
+    <h2>Admin Panel</h2>
+    <h3>Add New Category</h3>
+    <form>
+        <input type="text" placeholder="Category Name" required>
+        <button type="submit" class="button">Add Category</button>
+    </form>
+    <h3>User Management</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>user1</td>
+                <td>user1@example.com</td>
+                <td><button class="button">Delete</button></td>
+            </tr>
+            <!-- More user entries... -->
+        </tbody>
+    </table>
+</section>
+{% endblock %}

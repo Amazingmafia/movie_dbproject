@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="delete-movie">
+    <h2>Delete Movie</h2>
+    <p>Are you sure you want to delete the movie "{{ movie.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button">Confirm Delete</button>
+        <a href="{% url 'home' %}" class="button">Cancel</a>
+    </form>
+</section>
+{% endblock %}

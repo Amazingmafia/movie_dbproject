@@ -1,0 +1,55 @@
+ {% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <title>Movie Website</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .movie-card {
+            margin-bottom: 20px;
+        }
+        .movie-poster {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <section id="home" class="container">
+        <h2 class="my-4">Welcome to MovieDB</h2>
+<!--        <div class="row mb-4">-->
+<!--            <div class="col-md-12">-->
+<!--                <input type="text" class="form-control" placeholder="Search for movies...">-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="row">
+            {% for movie in movies %}
+            <div class="col-md-4">
+                <div class="card movie-card">
+                    <img src="{{ movie.poster.url }}" alt="Movie Poster" class="card-img-top movie-poster">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.title }}</h5>
+                        <p class="card-text">Release Date: {{ movie.release_date }}</p>
+                        <p class="card-text">Category: {{ movie.genre.name }}</p>
+                        <a href="{% url 'movie_details' movie.id %}" class="btn btn-primary">View Details</a>
+<!--                        {% if user.is_authenticated and movie.added_by == request.user %}-->
+<!--                        <form action="{% url 'delete_movie' movie.id %}" method="post" class="mt-2">-->
+<!--                            {% csrf_token %}-->
+<!--                            <button type="submit" class="btn btn-danger">Delete</button>-->
+<!--                        </form>-->
+<!--                        {% endif %}-->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- Add Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+{% endblock %}
